@@ -1,291 +1,339 @@
+// src/retracttower.scad
+// Retraction Tower Generator Library
+// Original author: Brad Kartchner
+// Version Author: Cameron K. Brooks
+
 /* [General Parameters] */
 // The label to add to the side of the tower
-Tower_Label = "";
+tower_label = "";
 
 // The label to add to the bottom of the right column
-Column_Label = "";
+column_label = "";
 
 // Text to prefix to the section labels
-Section_Label_Prefix = "";
+section_label_prefix = "";
 
 // Text to suffix to the section labels
-Section_Label_Suffix = "";
+section_label_suffix = "";
 
-// The starting value (speed or distance) for the tower
-Starting_Value = 1.0;
+// The starting value (retraction distance) for the tower
+starting_value = 1.0;
 
-// The ending value (speed or distance) for the tower
-Ending_Value = 6.0;
+// The ending value (retraction distance) for the tower
+ending_value = 6.0;
 
-// The amount to change the value (speed or distance) between sections
-Value_Change = 1.0;
+// The amount to change the value between sections
+value_change = 1.0;
 
 // The height of the base
-Base_Height = 0.801;
+base_height = 0.801;
 
 // The height of each section of the tower
-Section_Height = 8.001;
+section_height = 8.001;
 
 /* [Advanced Parameters] */
 // The font to use for tower text
-Font = "Arial:style=Bold";
+font = "Arial:style=Bold";
 
 // Should sections be labeled?
-Label_Sections = true;
+label_sections = true;
 
 // The height of the section labels in relation to the height of each section
-Section_Label_Height_Multiplier = 0.401;
+section_label_height_multiplier = 0.401;
 
-// The height of the tower label in relation to the length of the column
-Tower_Label_Height_Multiplier = 0.601;
+// The height of the tower label in relation to the height of each section
+tower_label_height_multiplier = 0.601;
 
 // The height of the column label in relation to the height of each section
-Column_Label_Height_Multiplier = 0.301;
+column_label_height_multiplier = 0.301;
 
 // The amount to space the letters in the column label as a multiple of the font height
-Column_Label_Letter_Spacing_Multiplier = 1.001;
+column_label_letter_spacing_multiplier = 1.001;
 
 // The thickness of walls in the tower
-Wall_Thickness = 0.601;
+wall_thickness = 0.601;
 
 // The width of the tower as multiples of the section height
-Tower_Width_Multiplier = 5.001;
-
-// The value to use for creating the model preview (lower is faster)
-Preview_Quality_Value = 24;
-
-// The value to use for creating the final model render (higher is more detailed)
-Render_Quality_Value = 24;
+tower_width_multiplier = 5.001;
 
 // A small value used to improve rendering in preview mode
-Iota = 0.001;
+iota = 0.001;
 
 /* [Development Parameters] */
 // Orient the model for creating a screenshot
-Orient_for_Screenshot = false;
+orient_for_screenshot = false;
 
-// The viewport distance for the screenshot 
-Screenshot_Vpd = 140.00;
+// The viewport distance for the screenshot
+screenshot_vpd = 140.00;
 
 // The viewport field of view for the screenshot
-Screenshot_Vpf = 22.50;
+screenshot_vpf = 22.50;
 
 // The viewport rotation for the screenshot
-Screenshot_Vpr = [75.00, 0.00, 300.00];
+screenshot_vpr = [75.00, 0.00, 300.00];
 
 // The viewport translation for the screenshot
-Screenshot_Vpt = [0.00, 0.00, 15.00];
+screenshot_vpt = [0.00, 0.00, 15.00];
 
-/* [Calculated parameters] */
+/* [Calculated Parameters] */
+// The value to use for creating the model preview (lower is faster)
+preview_quality_value = 24;
+
+// The value to use for creating the final model render (higher is more detailed)
+render_quality_value = 24;
+
 // Calculate the rendering quality
-$fn = $preview ? Preview_Quality_Value : Render_Quality_Value;
+$fn = $preview ? preview_quality_value : render_quality_value;
 
-// Ensure the value change has the correct sign
-Value_Change_Corrected =
-  Ending_Value > Starting_Value ? abs(Value_Change)
-  : -abs(Value_Change);
+/* [Helper Modules] */
 
-// Determine how many sections to generate
-Section_Count = ceil(abs(Ending_Value - Starting_Value) / abs(Value_Change) + 1);
-
-// Determine the size (width and length) of each column cube
-Cube_Size = Section_Height;
-
-// Determine the size (width and length) of the inset cap at the top of each column cube
-Cap_Size = Cube_Size - Wall_Thickness;
-
-// Determine the height of the inset cap at the top of each column cube
-Cap_Height = Wall_Thickness;
-
-// Determine the bridge thickness
-Bridge_Thickness = Wall_Thickness;
-
-// Deteermine the length (in the y direction) of the bridge
-Bridge_Length = Cube_Size / 2;
-
-// Calculate the width (in the x direction) of the tower
-Tower_Width = Cube_Size * Tower_Width_Multiplier;
-
-// Calculate the length (in the y direction) of the tower
-Tower_Length = Cube_Size;
-
-// Calculate the amount to expand the base beyond the size of the tower
-Base_Extension = Wall_Thickness * 4;
-
-// Calculate the width (in the x direction) of the base of the tower
-Base_Width = Tower_Width + Base_Extension * 2;
-
-// Calculate the length (in the y direction) of the base of the tower
-Base_Length = Tower_Length + Base_Extension * 2;
-
-// Calculate the font sizes
-Section_Label_Font_Size = Cube_Size * Section_Label_Height_Multiplier;
-Tower_Label_Font_Size = Cube_Size * Tower_Label_Height_Multiplier;
-Column_Label_Font_Size = Cube_Size * Column_Label_Height_Multiplier;
-
-// Calculate the depth of the labels
-Label_Depth = Wall_Thickness / 2;
-
-// Generate the model
-module Generate_Model() {
-  // Generate the base of the tower independantly of the tower sections
-  module Generate_Base() {
-    translate([-Base_Width / 2, -Base_Length / 2, 0])
-      cube([Base_Width, Base_Length, Base_Height]);
-  }
-
-  // Generate the tower proper by iteritively generating a section for each retraction value
-  module Generate_Tower() {
-    // Create each section
-    for (section = [0:Section_Count - 1]) {
-      // Determine the value for this section
-      value = Starting_Value + (Value_Change_Corrected * section);
-
-      // Determine the offset of the section
-      z_offset = section * Section_Height;
-
-      // Generate the section itself and move it into place
-      translate([0, 0, z_offset])
-        Generate_Section(str(value));
-    }
-  }
-
-  // Generate a single section of the tower with a given label
-  module Generate_Section(label) {
-    difference() {
-      union() {
-        // Generate a square column on the left side of the section
-        translate([-Tower_Width / 2 + Cube_Size / 2, 0, 0])
-          Generate_SquareSectionColumn();
-
-        // Generate a round column on the right side of the section
-        translate([Tower_Width / 2 - Cube_Size / 2, 0, 0])
-          Generate_RoundSectionColumn();
-      }
-
-      // Carve out the label for this section
-      if (Label_Sections)
-        Generate_SectionLabel(label);
-    }
-  }
-
-  // The left column of each section is square
-  module Generate_SquareSectionColumn() {
-    difference() {
-      union() {
-        // Create the main body of the column
-        translate([-Cube_Size / 2, -Cube_Size / 2, 0])
-          cube([Cube_Size, Cube_Size, Cube_Size - Cap_Height]);
-
-        // Create inset caps on top of the column
-        translate([-Cap_Size / 2, -Cap_Size / 2, Cube_Size - Cap_Height])
-          cube([Cap_Size, Cap_Size, Cap_Height]);
-      }
-
-      // Hollow out the center of the column
-      hollow_size = Cube_Size - Wall_Thickness * 3;
-      translate([-hollow_size / 2, -hollow_size / 2, -Iota])
-        cube([hollow_size, hollow_size, Cube_Size + Iota * 2]);
-    }
-  }
-
-  // The right column of each section is rounded
-  module Generate_RoundSectionColumn() {
-    difference() {
-      union() {
-        // Create the main body of the column
-        cylinder(d=Cube_Size, Cube_Size - Cap_Height);
-
-        // Create inset caps on top of the column
-        translate([0, 0, Cube_Size - Cap_Height])
-          cylinder(d=Cap_Size, Cap_Height);
-      }
-
-      // Hollow out the center of the column
-      hollow_size = Cube_Size - Wall_Thickness * 3;
-      translate([0, 0, -Iota])
-        cylinder(d=hollow_size, Cube_Size + Iota * 2);
-    }
-  }
-
-  // Generate the text that will be carved into the square section column
-  module Generate_SectionLabel(label) {
-    full_label = str(Section_Label_Prefix, label, Section_Label_Suffix);
-    label_depth = Wall_Thickness / 2;
-
-    translate([-Tower_Width / 2 + Cube_Size / 2, -Cube_Size / 2 - Iota, Cube_Size / 2])
-      rotate([90, 0, 0])
-        translate([0, 0, -label_depth])
-          linear_extrude(label_depth + Iota)
-            text(text=full_label, font=Font, size=Section_Label_Font_Size, halign="center", valign="center");
-  }
-
-  // Generate the curved text that will be carved into the first rounded section column
-  module Generate_ColumnLabel(label) {
-    // This function is rushed and hacky, but it works
-    // For now...
-
-    letter_radius = Cube_Size / 2 - Label_Depth;
-    letter_sweep_angle = (Column_Label_Font_Size / (2 * PI * letter_radius)) * 360;
-    label_sweep_angle = len(label) * letter_sweep_angle + (len(label) - 1) * letter_sweep_angle * Column_Label_Letter_Spacing_Multiplier;
-    start_angle = -label_sweep_angle / 4;
-
-    translate([Tower_Width / 2 - Cube_Size / 2, 0, Base_Height + Cube_Size / 2])
-      difference() {
-        // Each letter is generated separately and extruded at the appropriate angle
-        // to radiate from a central point
-        for (i = [0:1:len(label) - 1]) {
-          letter = label[i];
-          z_angle = (i - (len(label) - 1) / 2) * letter_sweep_angle * Column_Label_Letter_Spacing_Multiplier;
-          rotate([0, 0, z_angle])
-            rotate([90, 0, 0])
-              linear_extrude(Cube_Size)
-                text(text=letter, font=Font, size=Column_Label_Font_Size, halign="center", valign="center");
-        }
-
-        // Cut away the portions of the letters that would extend too far into the rounded column
-        translate([0, 0, -Column_Label_Font_Size])
-          cylinder(r=letter_radius, Column_Label_Font_Size * 3);
-      }
-  }
-
-  // Generate the text that will be carved along the left side of the tower
-  module Generate_TowerLabel(label) {
-    translate([-Tower_Width / 2 - Iota, 0, Cube_Size / 2])
-      rotate([90, -90, -90])
-        translate([0, 0, -Label_Depth])
-          linear_extrude(Label_Depth + Iota)
-            text(text=label, font=Font, size=Tower_Label_Font_Size, halign="left", valign="center");
-  }
-
-  module Generate() {
-    // Add the base
-    Generate_Base();
-
-    difference() {
-      // set the tower on top of the base
-      translate([0, 0, Base_Height])
-        Generate_Tower();
-
-      // Create the tower label
-      Generate_TowerLabel(Tower_Label);
-
-      // Create the column label
-      Generate_ColumnLabel(Column_Label);
-    }
-  }
-
-  Generate();
+// Generate the base of the tower
+module generate_retract_base(base_width, base_length, base_height) {
+    translate([-base_width / 2, -base_length / 2, 0])
+        cube([base_width, base_length, base_height]);
 }
 
-// Generate the model
-Generate_Model();
+// Generate the hollow square left column of a section
+module generate_retract_square_column(cube_size, cap_size, cap_height, wall_thickness, iota) {
+    hollow_size = cube_size - wall_thickness * 3;
+    difference() {
+        union() {
+            translate([-cube_size / 2, -cube_size / 2, 0])
+                cube([cube_size, cube_size, cube_size - cap_height]);
+            translate([-cap_size / 2, -cap_size / 2, cube_size - cap_height])
+                cube([cap_size, cap_size, cap_height]);
+        }
+        translate([-hollow_size / 2, -hollow_size / 2, -iota])
+            cube([hollow_size, hollow_size, cube_size + iota * 2]);
+    }
+}
 
-// Orient the viewport
-$vpd = Orient_for_Screenshot ? Screenshot_Vpd : $vpd;
-$vpf = Orient_for_Screenshot ? Screenshot_Vpf : $vpf;
-$vpr = Orient_for_Screenshot ? Screenshot_Vpr : $vpr;
-$vpt = Orient_for_Screenshot ? Screenshot_Vpt : $vpt;
+// Generate the hollow round right column of a section
+module generate_retract_round_column(cube_size, cap_size, cap_height, wall_thickness, iota) {
+    hollow_size = cube_size - wall_thickness * 3;
+    difference() {
+        union() {
+            cylinder(d = cube_size, cube_size - cap_height);
+            translate([0, 0, cube_size - cap_height])
+                cylinder(d = cap_size, cap_height);
+        }
+        translate([0, 0, -iota])
+            cylinder(d = hollow_size, cube_size + iota * 2);
+    }
+}
+
+// Generate the section label carved into the square column
+module generate_retract_section_label(
+    label,
+    section_label_prefix,
+    section_label_suffix,
+    tower_width,
+    cube_size,
+    font,
+    section_label_font_size,
+    label_depth,
+    iota
+) {
+    full_label = str(section_label_prefix, label, section_label_suffix);
+    translate([-tower_width / 2 + cube_size / 2, -cube_size / 2 - iota, cube_size / 2])
+        rotate([90, 0, 0])
+        translate([0, 0, -label_depth])
+        linear_extrude(label_depth + iota)
+            text(
+                text = full_label,
+                font = font,
+                size = section_label_font_size,
+                halign = "center",
+                valign = "center"
+            );
+}
+
+// Generate the curved column label wrapped around the rounded right column
+module generate_retract_column_label(
+    label,
+    tower_width,
+    cube_size,
+    base_height,
+    font,
+    column_label_font_size,
+    column_label_letter_spacing_multiplier,
+    label_depth
+) {
+    letter_radius = cube_size / 2 - label_depth;
+    letter_sweep_angle = (column_label_font_size / (2 * PI * letter_radius)) * 360;
+    translate([tower_width / 2 - cube_size / 2, 0, base_height + cube_size / 2])
+    difference() {
+        for (i = [0 : 1 : len(label) - 1]) {
+            letter = label[i];
+            z_angle = (i - (len(label) - 1) / 2) * letter_sweep_angle * column_label_letter_spacing_multiplier;
+            rotate([0, 0, z_angle])
+            rotate([90, 0, 0])
+            linear_extrude(cube_size)
+                text(
+                    text = letter,
+                    font = font,
+                    size = column_label_font_size,
+                    halign = "center",
+                    valign = "center"
+                );
+        }
+        translate([0, 0, -column_label_font_size])
+            cylinder(r = letter_radius, column_label_font_size * 3);
+    }
+}
+
+// Generate the tower label carved along the left side
+module generate_retract_tower_label(
+    label,
+    tower_width,
+    cube_size,
+    font,
+    tower_label_font_size,
+    label_depth,
+    iota
+) {
+    translate([-tower_width / 2 - iota, 0, cube_size / 2])
+        rotate([90, -90, -90])
+        translate([0, 0, -label_depth])
+        linear_extrude(label_depth + iota)
+            text(
+                text = label,
+                font = font,
+                size = tower_label_font_size,
+                halign = "left",
+                valign = "center"
+            );
+}
+
+// Generate a single section of the tower
+module generate_retract_section(
+    label,
+    tower_width,
+    cube_size,
+    cap_size,
+    cap_height,
+    wall_thickness,
+    font,
+    section_label_prefix,
+    section_label_suffix,
+    section_label_font_size,
+    label_depth,
+    iota,
+    label_sections
+) {
+    difference() {
+        union() {
+            translate([-tower_width / 2 + cube_size / 2, 0, 0])
+                generate_retract_square_column(cube_size, cap_size, cap_height, wall_thickness, iota);
+            translate([tower_width / 2 - cube_size / 2, 0, 0])
+                generate_retract_round_column(cube_size, cap_size, cap_height, wall_thickness, iota);
+        }
+        if (label_sections)
+            generate_retract_section_label(
+                label,
+                section_label_prefix,
+                section_label_suffix,
+                tower_width,
+                cube_size,
+                font,
+                section_label_font_size,
+                label_depth,
+                iota
+            );
+    }
+}
+
+// Generate the tower sections by iterating over each retraction value
+module generate_retract_tower_sections(
+    starting_value,
+    value_change_corrected,
+    section_count,
+    section_height,
+    tower_width,
+    cube_size,
+    cap_size,
+    cap_height,
+    wall_thickness,
+    font,
+    section_label_prefix,
+    section_label_suffix,
+    section_label_font_size,
+    label_depth,
+    iota,
+    label_sections
+) {
+    for (section = [0 : section_count - 1]) {
+        value = starting_value + (value_change_corrected * section);
+        z_offset = section * section_height;
+        translate([0, 0, z_offset])
+            generate_retract_section(
+                str(value),
+                tower_width,
+                cube_size,
+                cap_size,
+                cap_height,
+                wall_thickness,
+                font,
+                section_label_prefix,
+                section_label_suffix,
+                section_label_font_size,
+                label_depth,
+                iota,
+                label_sections
+            );
+    }
+}
+
+/* [Main Model Generation Module] */
+
+// Generates the retraction tower based on provided parameters
+module generate_retract_tower(
+    // General Parameters
+    tower_label = "",
+    column_label = "",
+    section_label_prefix = "",
+    section_label_suffix = "",
+    starting_value = 1.0,
+    ending_value = 6.0,
+    value_change = 1.0,
+    base_height = 0.801,
+    section_height = 8.001,
+    // Advanced Parameters
+    font = "Arial:style=Bold",
+    label_sections = true,
+    section_label_height_multiplier = 0.401,
+    tower_label_height_multiplier = 0.601,
+    column_label_height_multiplier = 0.301,
+    column_label_letter_spacing_multiplier = 1.001,
+    wall_thickness = 0.601,
+    tower_width_multiplier = 5.001,
+    iota = 0.001,
+    // Viewport Parameters
+    orient_for_screenshot = false,
+    screenshot_vpd = 140.00,
+    screenshot_vpf = 22.50,
+    screenshot_vpr = [75.00, 0.00, 300.00],
+    screenshot_vpt = [0.00, 0.00, 15.00]
+) {
+    /* [Calculated Parameters] */
+    value_change_corrected = ending_value > starting_value
+        ? abs(value_change)
+        : -abs(value_change);
+    section_count = ceil(abs(ending_value - starting_value) / abs(value_change) + 1);
+    cube_size = section_height;
+    cap_size = cube_size - wall_thickness;
+    cap_height = wall_thickness;
+    tower_width = cube_size * tower_width_multiplier;
+    base_extension = wall_thickness * 4;
+    base_width = tower_width + base_extension * 2;
+    base_length = cube_size + base_extension * 2;
+    section_label_font_size = cube_size * section_label_height_multiplier;
+    tower_label_font_size = cube_size * tower_label_height_multiplier;
+    column_label_font_size = cube_size * column_label_height_multiplier;
+    label_depth = wall_thickness / 2;
+
+    /* [Generate the Model] */
+    generate_retract_base(base_width, base_length, base_height);
 
     difference() {
         translate([0, 0, base_height])
