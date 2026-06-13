@@ -18,5 +18,5 @@ $fn = $preview ? preview_quality_value : render_quality_value;
 /* [Generate the XYZ Calibration Cube] */
 
 generate_xyz_cali_cube(
-    cube_size = cube_size
+  cube_size=cube_size
 );

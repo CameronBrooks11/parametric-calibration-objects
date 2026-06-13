@@ -34,21 +34,21 @@ $fn = $preview ? preview_quality_value : render_quality_value;
 /* [Generate the Detailed Temp Tower] */
 
 generate_temp_tower_detailed(
-    tower_label = tower_label,
-    section_label_prefix = section_label_prefix,
-    section_label_suffix = section_label_suffix,
-    starting_value = starting_value,
-    ending_value = ending_value,
-    value_change = value_change,
-    base_height = base_height,
-    section_height = section_height,
-    wall_thickness = wall_thickness,
-    font = font,
-    label_sections = label_sections,
-    base_extension = base_extension,
-    left_slope_angle = left_slope_angle,
-    right_slope_angle = right_slope_angle,
-    section_label_height_multiplier = section_label_height_multiplier,
-    iota = iota,
-    orient_for_screenshot = orient_for_screenshot
+  tower_label=tower_label,
+  section_label_prefix=section_label_prefix,
+  section_label_suffix=section_label_suffix,
+  starting_value=starting_value,
+  ending_value=ending_value,
+  value_change=value_change,
+  base_height=base_height,
+  section_height=section_height,
+  wall_thickness=wall_thickness,
+  font=font,
+  label_sections=label_sections,
+  base_extension=base_extension,
+  left_slope_angle=left_slope_angle,
+  right_slope_angle=right_slope_angle,
+  section_label_height_multiplier=section_label_height_multiplier,
+  iota=iota,
+  orient_for_screenshot=orient_for_screenshot
 );

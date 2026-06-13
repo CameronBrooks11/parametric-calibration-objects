@@ -27,8 +27,8 @@ $fn = $preview ? preview_quality_value : render_quality_value;
 /* [Generate the Torture Test] */
 
 generate_torture_test(
-    bar_thickness = bar_thickness,
-    cube_length = cube_length,
-    base_thickness = base_thickness,
-    base_scale = base_scale
+  bar_thickness=bar_thickness,
+  cube_length=cube_length,
+  base_thickness=base_thickness,
+  base_scale=base_scale
 );

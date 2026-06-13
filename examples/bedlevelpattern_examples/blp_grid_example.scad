@@ -15,5 +15,7 @@ quality_value = 128;
 $fn = quality_value;
 
 // Generate the pattern
-generate_bed_level_pattern(bed_level_pattern_type, print_area_width, print_area_depth, line_width, line_height,
-                           fill_percentage, grid_cell_count = grid_cell_count);
+generate_bed_level_pattern(
+  bed_level_pattern_type, print_area_width, print_area_depth, line_width, line_height,
+  fill_percentage, grid_cell_count=grid_cell_count
+);
