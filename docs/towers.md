@@ -16,25 +16,25 @@ include <src/flowtower.scad>;
 generate_flow_tower(starting_value = 115, ending_value = 85, value_change = -5);
 ```
 
-| Parameter | Default | Description |
-|---|---|---|
-| `tower_label` | `""` | Label inscribed on the base |
-| `tower_secondary_label` | `""` | Secondary label inscribed on the base |
-| `section_label_prefix` | `""` | Text prepended to each section value |
-| `section_label_suffix` | `""` | Text appended to each section value |
-| `starting_value` | `115` | First section value |
-| `ending_value` | `85` | Last section value |
-| `value_change` | `-5` | Step between sections (sign auto-corrected) |
-| `base_height` | `0.841` | Height of the flat base (mm) |
-| `section_size` | `8.401` | Width, depth, and height of each section (mm) |
-| `section_hole_diameter` | `4.201` | Diameter of the through-hole per section (mm) |
-| `font` | `"Arial:style=Bold"` | Font for all labels |
-| `label_sections` | `true` | Carve value into each section |
-| `section_label_height_multiplier` | `0.401` | Section label font size as fraction of `section_size` |
-| `tower_label_height_multiplier` | `0.601` | Tower label font size as fraction of `section_size` |
-| `tower_secondary_label_height_multiplier` | `0.401` | Secondary label font size as fraction of `section_size` |
-| `wall_thickness` | `0.601` | Wall thickness (mm) |
-| `iota` | `0.001` | Z-fighting offset |
+| Parameter                                 | Default              | Description                                             |
+| ----------------------------------------- | -------------------- | ------------------------------------------------------- |
+| `tower_label`                             | `""`                 | Label inscribed on the base                             |
+| `tower_secondary_label`                   | `""`                 | Secondary label inscribed on the base                   |
+| `section_label_prefix`                    | `""`                 | Text prepended to each section value                    |
+| `section_label_suffix`                    | `""`                 | Text appended to each section value                     |
+| `starting_value`                          | `115`                | First section value                                     |
+| `ending_value`                            | `85`                 | Last section value                                      |
+| `value_change`                            | `-5`                 | Step between sections (sign auto-corrected)             |
+| `base_height`                             | `0.841`              | Height of the flat base (mm)                            |
+| `section_size`                            | `8.401`              | Width, depth, and height of each section (mm)           |
+| `section_hole_diameter`                   | `4.201`              | Diameter of the through-hole per section (mm)           |
+| `font`                                    | `"Arial:style=Bold"` | Font for all labels                                     |
+| `label_sections`                          | `true`               | Carve value into each section                           |
+| `section_label_height_multiplier`         | `0.401`              | Section label font size as fraction of `section_size`   |
+| `tower_label_height_multiplier`           | `0.601`              | Tower label font size as fraction of `section_size`     |
+| `tower_secondary_label_height_multiplier` | `0.401`              | Secondary label font size as fraction of `section_size` |
+| `wall_thickness`                          | `0.601`              | Wall thickness (mm)                                     |
+| `iota`                                    | `0.001`              | Z-fighting offset                                       |
 
 ---
 
@@ -50,25 +50,25 @@ include <src/temptower.scad>;
 generate_temp_tower(starting_value = 220, ending_value = 180, value_change = -5);
 ```
 
-| Parameter | Default | Description |
-|---|---|---|
-| `tower_label` | `""` | Label inscribed along the left side |
-| `column_label` | `""` | Label inscribed on the right column face |
-| `section_label_prefix` | `""` | Text prepended to each section value |
-| `section_label_suffix` | `""` | Text appended to each section value |
-| `starting_value` | `220` | First section value |
-| `ending_value` | `180` | Last section value |
-| `value_change` | `-5` | Step between sections (sign auto-corrected) |
-| `base_height` | `0.801` | Height of the flat base (mm) |
-| `section_height` | `8.001` | Height of each section (mm) |
-| `font` | `"Arial:style=Bold"` | Font for all labels |
-| `label_sections` | `true` | Carve value into each section |
-| `section_label_height_multiplier` | `0.401` | Section label font size as fraction of `section_height` |
-| `tower_label_height_multiplier` | `0.601` | Tower label font size as fraction of `section_height` |
-| `column_label_height_multiplier` | `0.301` | Column label font size as fraction of `section_height` |
-| `wall_thickness` | `0.601` | Wall thickness (mm) |
-| `tower_width_multiplier` | `5.001` | Tower width as multiple of `section_height` |
-| `iota` | `0.001` | Z-fighting offset |
+| Parameter                         | Default              | Description                                             |
+| --------------------------------- | -------------------- | ------------------------------------------------------- |
+| `tower_label`                     | `""`                 | Label inscribed along the left side                     |
+| `column_label`                    | `""`                 | Label inscribed on the right column face                |
+| `section_label_prefix`            | `""`                 | Text prepended to each section value                    |
+| `section_label_suffix`            | `""`                 | Text appended to each section value                     |
+| `starting_value`                  | `220`                | First section value                                     |
+| `ending_value`                    | `180`                | Last section value                                      |
+| `value_change`                    | `-5`                 | Step between sections (sign auto-corrected)             |
+| `base_height`                     | `0.801`              | Height of the flat base (mm)                            |
+| `section_height`                  | `8.001`              | Height of each section (mm)                             |
+| `font`                            | `"Arial:style=Bold"` | Font for all labels                                     |
+| `label_sections`                  | `true`               | Carve value into each section                           |
+| `section_label_height_multiplier` | `0.401`              | Section label font size as fraction of `section_height` |
+| `tower_label_height_multiplier`   | `0.601`              | Tower label font size as fraction of `section_height`   |
+| `column_label_height_multiplier`  | `0.301`              | Column label font size as fraction of `section_height`  |
+| `wall_thickness`                  | `0.601`              | Wall thickness (mm)                                     |
+| `tower_width_multiplier`          | `5.001`              | Tower width as multiple of `section_height`             |
+| `iota`                            | `0.001`              | Z-fighting offset                                       |
 
 ---
 
@@ -85,24 +85,24 @@ include <src/temptower_detailed.scad>;
 generate_temp_tower_detailed(starting_value = 220, ending_value = 180, value_change = -5);
 ```
 
-| Parameter | Default | Description |
-|---|---|---|
-| `tower_label` | `""` | Label inscribed on the base |
-| `section_label_prefix` | `""` | Text prepended to each section value |
-| `section_label_suffix` | `""` | Text appended to each section value |
-| `starting_value` | `220` | First section value |
-| `ending_value` | `180` | Last section value |
-| `value_change` | `-5` | Step between sections (sign auto-corrected) |
-| `base_height` | `0.801` | Height of the flat base (mm) |
-| `section_height` | `8.001` | Height of each section (mm) |
-| `wall_thickness` | `0.601` | Wall thickness (mm) |
-| `font` | `"Arial:style=Bold"` | Font for all labels |
-| `label_sections` | `true` | Carve value into each section |
-| `base_extension` | `2.404` | Base overhang beyond section outline (mm) |
-| `left_slope_angle` | `35` | Left slope end angle (degrees) |
-| `right_slope_angle` | `45` | Right slope end angle (degrees) |
-| `section_label_height_multiplier` | `0.401` | Section label font size as fraction of `section_height` |
-| `iota` | `0.001` | Z-fighting offset |
+| Parameter                         | Default              | Description                                             |
+| --------------------------------- | -------------------- | ------------------------------------------------------- |
+| `tower_label`                     | `""`                 | Label inscribed on the base                             |
+| `section_label_prefix`            | `""`                 | Text prepended to each section value                    |
+| `section_label_suffix`            | `""`                 | Text appended to each section value                     |
+| `starting_value`                  | `220`                | First section value                                     |
+| `ending_value`                    | `180`                | Last section value                                      |
+| `value_change`                    | `-5`                 | Step between sections (sign auto-corrected)             |
+| `base_height`                     | `0.801`              | Height of the flat base (mm)                            |
+| `section_height`                  | `8.001`              | Height of each section (mm)                             |
+| `wall_thickness`                  | `0.601`              | Wall thickness (mm)                                     |
+| `font`                            | `"Arial:style=Bold"` | Font for all labels                                     |
+| `label_sections`                  | `true`               | Carve value into each section                           |
+| `base_extension`                  | `2.404`              | Base overhang beyond section outline (mm)               |
+| `left_slope_angle`                | `35`                 | Left slope end angle (degrees)                          |
+| `right_slope_angle`               | `45`                 | Right slope end angle (degrees)                         |
+| `section_label_height_multiplier` | `0.401`              | Section label font size as fraction of `section_height` |
+| `iota`                            | `0.001`              | Z-fighting offset                                       |
 
 ---
 
@@ -118,26 +118,26 @@ include <src/retracttower.scad>;
 generate_retract_tower(starting_value = 1.0, ending_value = 6.0, value_change = 1.0);
 ```
 
-| Parameter | Default | Description |
-|---|---|---|
-| `tower_label` | `""` | Label inscribed along the left side |
-| `column_label` | `""` | Label wrapped around the right round column |
-| `section_label_prefix` | `""` | Text prepended to each section value |
-| `section_label_suffix` | `""` | Text appended to each section value |
-| `starting_value` | `1.0` | First section value (mm) |
-| `ending_value` | `6.0` | Last section value (mm) |
-| `value_change` | `1.0` | Step between sections (sign auto-corrected) |
-| `base_height` | `0.801` | Height of the flat base (mm) |
-| `section_height` | `8.001` | Height of each section (mm) |
-| `font` | `"Arial:style=Bold"` | Font for all labels |
-| `label_sections` | `true` | Carve value into each section |
-| `section_label_height_multiplier` | `0.401` | Section label font size as fraction of `section_height` |
-| `tower_label_height_multiplier` | `0.601` | Tower label font size as fraction of `section_height` |
-| `column_label_height_multiplier` | `0.301` | Column label font size as fraction of `section_height` |
-| `column_label_letter_spacing_multiplier` | `1.001` | Letter spacing for the curved column label |
-| `wall_thickness` | `0.601` | Wall thickness (mm) |
-| `tower_width_multiplier` | `5.001` | Tower width as multiple of `section_height` |
-| `iota` | `0.001` | Z-fighting offset |
+| Parameter                                | Default              | Description                                             |
+| ---------------------------------------- | -------------------- | ------------------------------------------------------- |
+| `tower_label`                            | `""`                 | Label inscribed along the left side                     |
+| `column_label`                           | `""`                 | Label wrapped around the right round column             |
+| `section_label_prefix`                   | `""`                 | Text prepended to each section value                    |
+| `section_label_suffix`                   | `""`                 | Text appended to each section value                     |
+| `starting_value`                         | `1.0`                | First section value (mm)                                |
+| `ending_value`                           | `6.0`                | Last section value (mm)                                 |
+| `value_change`                           | `1.0`                | Step between sections (sign auto-corrected)             |
+| `base_height`                            | `0.801`              | Height of the flat base (mm)                            |
+| `section_height`                         | `8.001`              | Height of each section (mm)                             |
+| `font`                                   | `"Arial:style=Bold"` | Font for all labels                                     |
+| `label_sections`                         | `true`               | Carve value into each section                           |
+| `section_label_height_multiplier`        | `0.401`              | Section label font size as fraction of `section_height` |
+| `tower_label_height_multiplier`          | `0.601`              | Tower label font size as fraction of `section_height`   |
+| `column_label_height_multiplier`         | `0.301`              | Column label font size as fraction of `section_height`  |
+| `column_label_letter_spacing_multiplier` | `1.001`              | Letter spacing for the curved column label              |
+| `wall_thickness`                         | `0.601`              | Wall thickness (mm)                                     |
+| `tower_width_multiplier`                 | `5.001`              | Tower width as multiple of `section_height`             |
+| `iota`                                   | `0.001`              | Z-fighting offset                                       |
 
 ---
 
@@ -154,21 +154,21 @@ include <src/speedtower.scad>;
 generate_speed_tower(starting_speed_value = 20, ending_speed_value = 100, speed_value_change = 20);
 ```
 
-| Parameter | Default | Description |
-|---|---|---|
-| `tower_label` | `""` | Label inscribed on the base |
-| `tower_description` | `""` | Secondary label inscribed on the base |
-| `starting_speed_value` | `20` | First section speed (mm/s) |
-| `ending_speed_value` | `100` | Last section speed (mm/s) |
-| `speed_value_change` | `20` | Step between sections (sign auto-corrected) |
-| `wing_length` | `50.001` | Length of each wing (mm) |
-| `wing_thickness` | `3.001` | Thickness of each wing (mm) |
-| `base_height` | `0.841` | Height of the flat base (mm) |
-| `section_height` | `8.401` | Height of each section (mm) |
-| `base_font_size` | `2.001` | Font size for base axis labels (mm) |
-| `hide_labels` | `false` | Suppress all label inscriptions |
-| `font` | `"Arial:style=Bold"` | Font for all labels |
-| `wall_thickness` | `0.4001` | Wall thickness (mm) |
-| `section_font_height_multiplier` | `0.333` | Section label height as fraction of `section_height` |
-| `inscription_depth` | `0.201` | Depth of all inscriptions (mm) |
-| `iota` | `0.001` | Z-fighting offset |
+| Parameter                        | Default              | Description                                          |
+| -------------------------------- | -------------------- | ---------------------------------------------------- |
+| `tower_label`                    | `""`                 | Label inscribed on the base                          |
+| `tower_description`              | `""`                 | Secondary label inscribed on the base                |
+| `starting_speed_value`           | `20`                 | First section speed (mm/s)                           |
+| `ending_speed_value`             | `100`                | Last section speed (mm/s)                            |
+| `speed_value_change`             | `20`                 | Step between sections (sign auto-corrected)          |
+| `wing_length`                    | `50.001`             | Length of each wing (mm)                             |
+| `wing_thickness`                 | `3.001`              | Thickness of each wing (mm)                          |
+| `base_height`                    | `0.841`              | Height of the flat base (mm)                         |
+| `section_height`                 | `8.401`              | Height of each section (mm)                          |
+| `base_font_size`                 | `2.001`              | Font size for base axis labels (mm)                  |
+| `hide_labels`                    | `false`              | Suppress all label inscriptions                      |
+| `font`                           | `"Arial:style=Bold"` | Font for all labels                                  |
+| `wall_thickness`                 | `0.4001`             | Wall thickness (mm)                                  |
+| `section_font_height_multiplier` | `0.333`              | Section label height as fraction of `section_height` |
+| `inscription_depth`              | `0.201`              | Depth of all inscriptions (mm)                       |
+| `iota`                           | `0.001`              | Z-fighting offset                                    |

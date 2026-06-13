@@ -14,9 +14,9 @@ include <src/xyzcalicube.scad>;
 generate_xyz_cali_cube(cube_size = 20);
 ```
 
-| Parameter | Default | Description |
-|---|---|---|
-| `cube_size` | `20` | Side length of the cube (mm) |
+| Parameter   | Default | Description                  |
+| ----------- | ------- | ---------------------------- |
+| `cube_size` | `20`    | Side length of the cube (mm) |
 
 Note: letter geometry is scaled proportionally to `cube_size` from the 20 mm
 reference design. For best results use the default 20 mm.
@@ -36,11 +36,11 @@ include <src/torture_test.scad>;
 generate_torture_test();
 ```
 
-| Parameter | Default | Description |
-|---|---|---|
-| `bar_thickness` | `5` | Diameter of the wire-frame bars (mm) |
-| `cube_length` | `80` | Overall bounding size of the cube (mm) |
-| `base_thickness` | `4` | Thickness of the circular base (mm) |
-| `base_scale` | `1.1` | Base diameter as a multiple of `cube_length` |
+| Parameter        | Default | Description                                  |
+| ---------------- | ------- | -------------------------------------------- |
+| `bar_thickness`  | `5`     | Diameter of the wire-frame bars (mm)         |
+| `cube_length`    | `80`    | Overall bounding size of the cube (mm)       |
+| `base_thickness` | `4`     | Thickness of the circular base (mm)          |
+| `base_scale`     | `1.1`   | Base diameter as a multiple of `cube_length` |
 
 Reference: [Printables model 188769](https://www.printables.com/model/188769-customizable-torture-tes/files)

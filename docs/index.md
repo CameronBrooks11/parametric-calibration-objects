@@ -10,9 +10,9 @@ models. Ready-to-use example files for every module are provided in `examples/`.
 
 ## Contents
 
-| Document | Description |
-|---|---|
-| [usage.md](usage.md) | How to include and call modules, quality settings, common parameters |
-| [towers.md](towers.md) | Parameter reference for all five tower generators |
-| [bed-level-pattern.md](bed-level-pattern.md) | Parameter reference for the bed level pattern module |
-| [utility-models.md](utility-models.md) | Parameter reference for XYZ calibration cube and torture test |
+| Document                                     | Description                                                          |
+| -------------------------------------------- | -------------------------------------------------------------------- |
+| [usage.md](usage.md)                         | How to include and call modules, quality settings, common parameters |
+| [towers.md](towers.md)                       | Parameter reference for all five tower generators                    |
+| [bed-level-pattern.md](bed-level-pattern.md) | Parameter reference for the bed level pattern module                 |
+| [utility-models.md](utility-models.md)       | Parameter reference for XYZ calibration cube and torture test        |
