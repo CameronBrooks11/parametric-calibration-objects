@@ -1,26 +1,25 @@
-// examples/flowtower_examples/flowtower_example.scad
+// examples/temptower_examples/temptower_detailed_example.scad
 
-include <../../src/flowtower.scad>;
+include <../../src/temptower_detailed.scad>;
 
 /* [User Parameters] */
 
 // Set your desired parameters here
-tower_label = "Flow Tower";
-tower_secondary_label = "Calibration";
+tower_label = "Temp Tower";
 section_label_prefix = "";
-section_label_suffix = "%";
-starting_value = 115;
-ending_value = 85;
+section_label_suffix = "C";
+starting_value = 220;
+ending_value = 180;
 value_change = -5;
-base_height = 0.841;
-section_size = 8.401;
-section_hole_diameter = 4.201;
+base_height = 0.801;
+section_height = 8.001;
+wall_thickness = 0.601;
 font = "Arial:style=Bold";
 label_sections = true;
+base_extension = 2.404;
+left_slope_angle = 35;
+right_slope_angle = 45;
 section_label_height_multiplier = 0.401;
-tower_label_height_multiplier = 0.601;
-tower_secondary_label_height_multiplier = 0.401;
-wall_thickness = 0.601;
 iota = 0.001;
 orient_for_screenshot = false;
 
@@ -32,25 +31,24 @@ render_quality_value = 48; // Increase for higher detail
 
 $fn = $preview ? preview_quality_value : render_quality_value;
 
-/* [Generate the Flow Tower] */
+/* [Generate the Detailed Temp Tower] */
 
-generate_flow_tower(
+generate_temp_tower_detailed(
     tower_label = tower_label,
-    tower_secondary_label = tower_secondary_label,
     section_label_prefix = section_label_prefix,
     section_label_suffix = section_label_suffix,
     starting_value = starting_value,
     ending_value = ending_value,
     value_change = value_change,
     base_height = base_height,
-    section_size = section_size,
-    section_hole_diameter = section_hole_diameter,
+    section_height = section_height,
+    wall_thickness = wall_thickness,
     font = font,
     label_sections = label_sections,
+    base_extension = base_extension,
+    left_slope_angle = left_slope_angle,
+    right_slope_angle = right_slope_angle,
     section_label_height_multiplier = section_label_height_multiplier,
-    tower_label_height_multiplier = tower_label_height_multiplier,
-    tower_secondary_label_height_multiplier = tower_secondary_label_height_multiplier,
-    wall_thickness = wall_thickness,
     iota = iota,
     orient_for_screenshot = orient_for_screenshot
 );
