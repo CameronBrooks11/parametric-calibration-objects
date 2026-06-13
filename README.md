@@ -17,7 +17,7 @@ only on an explicit module call. Example entry points live in `examples/`.
 | `generate_xyz_cali_cube(...)` | `src/xyzcalicube.scad` | 20 mm XYZ calibration cube |
 | `generate_torture_test(...)` | `src/torture_test.scad` | Structural torture test model |
 
-Full parameter reference: [docs/README.md](docs/README.md)
+Full documentation: [docs/index.md](docs/index.md)
 
 ## Usage
 
