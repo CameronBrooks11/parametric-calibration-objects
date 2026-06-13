@@ -1,6 +1,6 @@
-// examples/blp_showcase_example.scad
+// examples/bedlevelpattern_examples/blp_showcase_example.scad
 
-include <../src/bedlevelpattern.scad>;
+include <../../src/bedlevelpattern.scad>;
 
 /* [Pattern Selection] */
 
