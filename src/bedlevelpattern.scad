@@ -1,52 +1,8 @@
-// Bed Level Test Patterns Generator
-// bedlevelpattern.scad
+// src/bedlevelpattern.scad
+// Bed Level Test Patterns Generator Library
 // Inspired by All3DP article: https://all3dp.com/2/ender-3-pro-bed-leveling-gcode/
 // Original author:  Brad Kartchner 
 // Version Author: Cameron K. Brooks
-
-/* [General Parameters] */
-// The type of bed level pattern to generate
-bed_level_pattern_type = "concentric squares"; // Options: ["concentric squares", "spiral squares", "concentric circles", "x in square", "circle in square", "grid", "padded grid", "five circles"]
-
-// The width and depth of the bed print area
-print_area_width = 220.001;
-print_area_depth = 220.001;
-
-// The width and height of the lines to print
-line_width = 0.401;
-line_height = 0.301;
-
-// The percentage of the print area to use for the bed level pattern
-fill_percentage = 90; // Range: [50:100]
-
-/* [Bed Level Pattern-Specific Parameters] */
-// Number of rings or grids for specific patterns
-concentric_ring_count = 7;
-grid_cell_count = 4;
-
-// Size parameters for specific patterns
-grid_pad_size = 10.001;
-circle_diameter = 20;
-outline_distance = 5;
-
-/* [Advanced Parameters] */
-// Quality value (higher numbers mean better quality, lower numbers mean faster rendering)
-quality_value = 128;
-
-/* [Development Parameters] */
-// Highlight the print area?
-show_print_area = false;
-
-// Orient the model for creating a screenshot?
-orient_for_screenshot = false;
-
-// Screenshot parameters
-screenshot_vpd = 400.00;
-screenshot_vpf = 22.50;
-screenshot_vpr = [60.00, 0.00, 300.00];
-screenshot_vpt = [0.00, -5.00, -16.00];
-
-$fn = quality_value;
 
 /* [Helper Modules] */
 
@@ -297,7 +253,23 @@ module generate_five_circles_pattern(width, height, line_width, circle_diameter,
 
 /* [Main Model Generation Module] */
 
-module generate_model() {
+// Generates the bed level pattern based on provided parameters
+module generate_bed_level_pattern(
+    bed_level_pattern_type,
+    print_area_width,
+    print_area_depth,
+    line_width,
+    line_height,
+    fill_percentage,
+    // Pattern-specific parameters
+    concentric_ring_count = 7,
+    grid_cell_count = 4,
+    grid_pad_size = 10.001,
+    circle_diameter = 20,
+    outline_distance = 5,
+    // Optional parameters
+    show_print_area = false
+) {
     pattern_width = print_area_width * (fill_percentage / 100);
     pattern_depth = print_area_depth * (fill_percentage / 100);
 
@@ -325,12 +297,3 @@ module generate_model() {
         %square([print_area_width, print_area_depth], center = true);
     }
 }
-
-// Generate the model
-generate_model();
-
-// Orient the viewport for screenshot if enabled
-$vpd = orient_for_screenshot ? screenshot_vpd : $vpd;
-$vpf = orient_for_screenshot ? screenshot_vpf : $vpf;
-$vpr = orient_for_screenshot ? screenshot_vpr : $vpr;
-$vpt = orient_for_screenshot ? screenshot_vpt : $vpt;

@@ -1,259 +1,371 @@
+// src/flowtower.scad
+// Flow Tower Generator
+// Original author: Brad Kartchner
+// Version Author: Cameron K. Brooks
+// Refactored for best practices
+
 /* [General Parameters] */
 // The label to add to the tower
-Tower_Label = "";
+tower_label = "";
 
 // The secondary label to add to the tower
-Tower_Secondary_Label = "";
+tower_secondary_label = "";
 
 // Text to prefix to the section labels
-Section_Label_Prefix = "";
+section_label_prefix = "";
 
 // Text to suffix to the section labels
-Section_Label_Suffix = "";
+section_label_suffix = "";
 
 // The starting value
-Starting_Value = 115;
+starting_value = 115;
 
 // The ending value
-Ending_Value = 85;
+ending_value = 85;
 
 // The amount to change the value between sections
-Value_Change = -5;
+value_change = -5;
 
 // The height of the base
-Base_Height = 0.841;
+base_height = 0.841;
 
 // The height of each section of the tower
-Section_Size = 8.401;
+section_size = 8.401;
 
 // The diameter of the holes to create in each section
-Section_Hole_Diameter = 4.201;
-
-
+section_hole_diameter = 4.201;
 
 /* [Advanced Parameters] */
 // The font to use for tower text
-Font = "Arial:style=Bold";
+font = "Arial:style=Bold";
 
 // Should sections be labeled?
-Label_Sections = true;
+label_sections = true;
 
 // The height of the section labels in relation to the height of each section
-Section_Label_Height_Multiplier = 0.401;
+section_label_height_multiplier = 0.401;
 
 // The height of the tower label in relation to the length of the column
-Tower_Label_Height_Multiplier = 0.601;
+tower_label_height_multiplier = 0.601;
 
-// The height of the temperature label in relation to the height of each section
-Tower_Secondary_Label_Height_Multiplier = 0.401;
+// The height of the secondary label in relation to the height of each section
+tower_secondary_label_height_multiplier = 0.401;
 
 // The thickness of walls in the tower
-Wall_Thickness = 0.601;
+wall_thickness = 0.601;
 
 // The value to use for creating the model preview (lower is faster)
-Preview_Quality_Value = 24;
+preview_quality_value = 24;
 
 // The value to use for creating the final model render (higher is more detailed)
-Render_Quality_Value = 24;
+render_quality_value = 24;
 
 // A small value used to improve rendering in preview mode
-Iota = 0.001;
-
-
+iota = 0.001;
 
 /* [Development Parameters] */
 // Orient the model for creating a screenshot
-Orient_for_Screenshot = false;
+orient_for_screenshot = false;
 
-// The viewport distance for the screenshot 
-Screenshot_Vpd = 140.00;
+// The viewport distance for the screenshot
+screenshot_vpd = 140.00;
 
 // The viewport field of view for the screenshot
-Screenshot_Vpf = 22.50;
+screenshot_vpf = 22.50;
 
 // The viewport rotation for the screenshot
-Screenshot_Vpr = [ 75.00, 0.00, 45.00 ];
+screenshot_vpr = [75.00, 0.00, 45.00];
 
 // The viewport translation for the screenshot
-Screenshot_Vpt = [ 0.00, 0.00, 15.00 ];
-
-
+screenshot_vpt = [0.00, 0.00, 15.00];
 
 /* [Calculated Parameters] */
 // Calculate the rendering quality
-$fn = $preview ? Preview_Quality_Value : Render_Quality_Value;
+$fn = $preview ? preview_quality_value : render_quality_value;
 
-// Ensure the value change has the correct sign
-Value_Change_Corrected = Ending_Value > Starting_Value
-    ? abs(Value_Change)
-    : -abs(Value_Change);
+/* [Helper Modules] */
 
-// Determine how many sections to generate
-Section_Count = ceil(abs(Ending_Value - Starting_Value) / abs(Value_Change) + 1);
-
-// Calculate the amount to expand the base beyond the size of the tower
-Base_Extension = Wall_Thickness*4;
-
-// Calculate the horizontal size of the base of the tower
-Base_Size = Section_Size*2 + Base_Extension*2;
-
-// Calculate the font size
-Section_Label_Font_Size = Section_Size * Section_Label_Height_Multiplier;
-Tower_Label_Font_Size = Section_Size * Tower_Label_Height_Multiplier;
-Tower_Secondary_Label_Font_Size = Section_Size * Tower_Secondary_Label_Height_Multiplier; 
-
-// Calculate the depth of the labels
-Label_Depth = Wall_Thickness/2;
-
-
-module Generate_Model()
-{
-    // Generate the base of the tower independantly of the tower sections
-    module Generate_Base()
-    {
-        translate([-Base_Size/2, -Base_Size/2, 0])
-            cube([Base_Size, Base_Size, Base_Height]);
-    }
-
-
-
-    // Generate the tower proper by iteritively generating a section for each retraction value
-    module Generate_Tower()
-    {
-        // Create each section
-        for (section = [0: Section_Count - 1])
-        {
-            // Determine the value for this section
-            value = Starting_Value + (Value_Change_Corrected * section);
-
-            // Determine the offset of the section
-            z_offset = section*Section_Size;
-
-            // Determine the rotation of the section
-            z_rot = -90 * section;
-
-            // Generate the section itself and move it into place
-            translate([0, 0, z_offset])
-                rotate([0, 0, z_rot])
-                {
-                    Generate_Section(str(value));
-                    Generate_SectionConnector();
-                }
-        }
-    }
-
-
-
-    // Generate a single section of the tower with a given label
-    module Generate_Section(label)
-    {
-        difference()
-        {
-            // Create the main body of the section
-            translate([-Section_Size, -Section_Size, 0])
-                cube([Section_Size, Section_Size, Section_Size]);
-
-            translate([-Section_Size - Section_Size/2, -Section_Size/2, Section_Size/2])
-                rotate([0, 90, 0])
-                cylinder(d=Section_Hole_Diameter, Section_Size*2);
-
-            // Carve out the label for this section
-            if (Label_Sections)
-                Generate_SectionLabel(label);
-        }
-    }
-
-
-
-    // Generate the sloping connector that connects one section to the next
-    module Generate_SectionConnector()
-    {
-        points =
-        [
-            [0, 0],
-            [Section_Size, Section_Size],
-            [Section_Size, 0],
-        ];
-
-        rotate([0, -90, 0])
-            linear_extrude(Section_Size)
-            polygon(points);
-    }
-
-
-
-    // Generate the text that will be carved into the square section column
-    module Generate_SectionLabel(label)
-    {
-        full_label = str(Section_Label_Prefix, label, Section_Label_Suffix);
-        translate([-Section_Size/2, -Section_Size, Section_Size/2])
-            rotate([90, 0, 0])
-            translate([0, 0, -Label_Depth])
-            linear_extrude(Label_Depth + Iota)
-            text(text=full_label, font=Font, size=Section_Label_Font_Size, halign="center", valign="center");
-    }
-
-
-
-    // Generate the text that will be carved on the base of the tower
-    module Generate_TowerLabel(label)
-    {
-        width = Base_Size - Wall_Thickness*2;
-
-        translate([Base_Size/4, 0, 0])
-            rotate([0, 0, 90])
-            linear_extrude(Label_Depth + Iota)
-            resize([width, 0], auto=true)
-            text(text=label, font=Font, size=Tower_Label_Font_Size, halign="center", valign="center");
-    }
-
-
-
-    // Generate the secondary tower label
-    module Generate_Secondary_Label(label)
-    {
-        translate([-Base_Size/4, 0, 0])
-            rotate([0, 0, 90])
-            translate([Base_Size/4, 0, 0])
-            rotate([0, 0, 90])
-            linear_extrude(Label_Depth + Iota)
-            text(text=label, font=Font, size=Tower_Secondary_Label_Font_Size, halign="center", valign="center");
-    }
-
-
-
-    // Generate the model
-    module Generate()
-    {
-        // Add the base
-        Generate_Base();
-
-        translate([0, 0, Base_Height])
-            union()
-            {
-                // set the tower on top of the base
-                Generate_Tower();
-
-                // Create the tower label
-                Generate_TowerLabel(Tower_Label);
-
-                // Create the column label
-                Generate_Secondary_Label(Tower_Secondary_Label);
-            }
-    }
-
-
-
-    Generate();
+// Generate the base of the tower
+module generate_base(base_size, base_height) {
+    translate([-base_size / 2, -base_size / 2, 0])
+        cube([base_size, base_size, base_height]);
 }
 
+// Generate a single section of the tower with a given label
+module generate_section(
+    label,
+    section_size,
+    section_hole_diameter,
+    wall_thickness,
+    font,
+    label_depth,
+    iota,
+    label_sections,
+    section_label_prefix,
+    section_label_suffix,
+    section_label_font_size
+) {
+    difference() {
+        // Create the main body of the section
+        translate([-section_size, -section_size, 0])
+            cube([section_size, section_size, section_size]);
 
+        // Create the hole in the section
+        translate([-section_size - section_size / 2, -section_size / 2, section_size / 2])
+            rotate([0, 90, 0])
+            cylinder(d = section_hole_diameter, h = section_size * 2);
 
-// Generate the model
-Generate_Model();
+        // Carve out the label for this section
+        if (label_sections)
+            generate_section_label(
+                label,
+                section_size,
+                wall_thickness,
+                font,
+                label_depth,
+                iota,
+                section_label_prefix,
+                section_label_suffix,
+                section_label_font_size
+            );
+    }
+}
 
-// Orient the viewport
-$vpd = Orient_for_Screenshot ? Screenshot_Vpd : $vpd;
-$vpf = Orient_for_Screenshot ? Screenshot_Vpf : $vpf;
-$vpr = Orient_for_Screenshot ? Screenshot_Vpr : $vpr;
-$vpt = Orient_for_Screenshot ? Screenshot_Vpt : $vpt;
+// Generate the text that will be carved into the square section column
+module generate_section_label(
+    label,
+    section_size,
+    wall_thickness,
+    font,
+    label_depth,
+    iota,
+    section_label_prefix,
+    section_label_suffix,
+    section_label_font_size
+) {
+    full_label = str(section_label_prefix, label, section_label_suffix);
+    translate([-section_size / 2, -section_size, section_size / 2])
+        rotate([90, 0, 0])
+        translate([0, 0, -label_depth])
+        linear_extrude(height = label_depth + iota)
+            text(
+                text = full_label,
+                font = font,
+                size = section_label_font_size,
+                halign = "center",
+                valign = "center"
+            );
+}
+
+// Generate the sloping connector that connects one section to the next
+module generate_section_connector(section_size) {
+    points = [
+        [0, 0],
+        [section_size, section_size],
+        [section_size, 0],
+    ];
+
+    rotate([0, -90, 0])
+        linear_extrude(height = section_size)
+        polygon(points);
+}
+
+// Generate the text that will be carved on the base of the tower
+module generate_tower_label(
+    tower_label,
+    base_size,
+    wall_thickness,
+    font,
+    label_depth,
+    iota,
+    tower_label_font_size
+) {
+    width = base_size - wall_thickness * 2;
+
+    translate([base_size / 4, 0, 0])
+        rotate([0, 0, 90])
+        linear_extrude(height = label_depth + iota)
+        resize([width, 0], auto = true)
+            text(
+                text = tower_label,
+                font = font,
+                size = tower_label_font_size,
+                halign = "center",
+                valign = "center"
+            );
+}
+
+// Generate the secondary tower label
+module generate_secondary_label(
+    tower_secondary_label,
+    base_size,
+    font,
+    label_depth,
+    iota,
+    tower_secondary_label_font_size
+) {
+    translate([-base_size / 4, 0, 0])
+        rotate([0, 0, 90])
+        translate([base_size / 4, 0, 0])
+        rotate([0, 0, 90])
+        linear_extrude(height = label_depth + iota)
+            text(
+                text = tower_secondary_label,
+                font = font,
+                size = tower_secondary_label_font_size,
+                halign = "center",
+                valign = "center"
+            );
+}
+
+// Generate the tower by iteratively creating sections
+module generate_tower(
+    starting_value,
+    value_change_corrected,
+    section_count,
+    section_size,
+    section_hole_diameter,
+    wall_thickness,
+    font,
+    label_depth,
+    iota,
+    label_sections,
+    section_label_prefix,
+    section_label_suffix,
+    section_label_font_size
+) {
+    for (section = [0 : section_count - 1]) {
+        // Determine the value for this section
+        value = starting_value + (value_change_corrected * section);
+
+        // Determine the offset of the section
+        z_offset = section * section_size;
+
+        // Determine the rotation of the section
+        z_rot = -90 * section;
+
+        // Generate the section itself and move it into place
+        translate([0, 0, z_offset])
+            rotate([0, 0, z_rot]) {
+                generate_section(
+                    str(value),
+                    section_size,
+                    section_hole_diameter,
+                    wall_thickness,
+                    font,
+                    label_depth,
+                    iota,
+                    label_sections,
+                    section_label_prefix,
+                    section_label_suffix,
+                    section_label_font_size
+                );
+                generate_section_connector(section_size);
+            }
+    }
+}
+
+/* [Main Model Generation Module] */
+
+module generate_flow_tower(
+    // General Parameters
+    tower_label = "",
+    tower_secondary_label = "",
+    section_label_prefix = "",
+    section_label_suffix = "",
+    starting_value = 115,
+    ending_value = 85,
+    value_change = -5,
+    base_height = 0.841,
+    section_size = 8.401,
+    section_hole_diameter = 4.201,
+    // Advanced Parameters
+    font = "Arial:style=Bold",
+    label_sections = true,
+    section_label_height_multiplier = 0.401,
+    tower_label_height_multiplier = 0.601,
+    tower_secondary_label_height_multiplier = 0.401,
+    wall_thickness = 0.601,
+    iota = 0.001,
+    // Viewport Parameters
+    orient_for_screenshot = false,
+    screenshot_vpd = 140.00,
+    screenshot_vpf = 22.50,
+    screenshot_vpr = [75.00, 0.00, 45.00],
+    screenshot_vpt = [0.00, 0.00, 15.00]
+) {
+    /* [Calculated Parameters] */
+    // Ensure the value change has the correct sign
+    value_change_corrected = ending_value > starting_value
+        ? abs(value_change)
+        : -abs(value_change);
+
+    // Determine how many sections to generate
+    section_count = ceil(abs(ending_value - starting_value) / abs(value_change) + 1);
+
+    // Calculate the amount to expand the base beyond the size of the tower
+    base_extension = wall_thickness * 4;
+
+    // Calculate the horizontal size of the base of the tower
+    base_size = section_size * 2 + base_extension * 2;
+
+    // Calculate the font sizes
+    section_label_font_size = section_size * section_label_height_multiplier;
+    tower_label_font_size = section_size * tower_label_height_multiplier;
+    tower_secondary_label_font_size = section_size * tower_secondary_label_height_multiplier;
+
+    // Calculate the depth of the labels
+    label_depth = wall_thickness / 2;
+
+    /* [Generate the Model] */
+
+    // Add the base
+    generate_base(base_size, base_height);
+
+    translate([0, 0, base_height])
+        union() {
+            // Generate the tower
+            generate_tower(
+                starting_value,
+                value_change_corrected,
+                section_count,
+                section_size,
+                section_hole_diameter,
+                wall_thickness,
+                font,
+                label_depth,
+                iota,
+                label_sections,
+                section_label_prefix,
+                section_label_suffix,
+                section_label_font_size
+            );
+
+            // Generate the tower label
+            generate_tower_label(
+                tower_label,
+                base_size,
+                wall_thickness,
+                font,
+                label_depth,
+                iota,
+                tower_label_font_size
+            );
+
+            // Generate the secondary label
+            generate_secondary_label(
+                tower_secondary_label,
+                base_size,
+                font,
+                label_depth,
+                iota,
+                tower_secondary_label_font_size
+            );
+        }
+
+    /* [Viewport Orientation] */
+    $vpd = orient_for_screenshot ? screenshot_vpd : $vpd;
+    $vpf = orient_for_screenshot ? screenshot_vpf : $vpf;
+    $vpr = orient_for_screenshot ? screenshot_vpr : $vpr;
+    $vpt = orient_for_screenshot ? screenshot_vpt : $vpt;
+}
