@@ -1,0 +1,30 @@
+# Output and artifact directories
+outputs/
+artifacts/
+planning/
+
+# OpenSCAD outputs
+*.stl
+*.amf
+*.3mf
+*.dxf
+*.svg
+*.png
+*.echo
+*.ast
+*.term
+*.csg
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor/IDE
+.vscode/
+*.swp
+*~
+
+# Temporary files
+*.tmp
+*.bak
