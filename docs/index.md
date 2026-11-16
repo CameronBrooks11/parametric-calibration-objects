@@ -1,3 +1,8 @@
+---
+title: Home
+nav_order: 1
+---
+
 # Documentation Index
 
 parametric-calibration-objects is a library of parametric OpenSCAD modules for

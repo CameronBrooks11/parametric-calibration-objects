@@ -21,12 +21,13 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
-      # A pinned snapshot, the OpenSCAD these examples are checked on.
+      # A pinned snapshot, the OpenSCAD these examples are checked on: 2026.10.15 or
+      # later, where textmetrics() is no longer experimental.
       - name: Install OpenSCAD snapshot and just
         # The AppImage and its checksum; update both together.
         env:
-          OPENSCAD_SNAPSHOT: OpenSCAD-2026.08.19-x86_64.AppImage
-          OPENSCAD_SHA256: fdd818025e890f465ffacffbe7d0c6fa3ebeb3f7c18ee860a909ab41396be643
+          OPENSCAD_SNAPSHOT: OpenSCAD-2026.10.15-x86_64.AppImage
+          OPENSCAD_SHA256: 9d26e390d3a5c94f2e304d94d7b2eff77fb11fcd25829f2814de147ba92ac363
         run: |
           set -euo pipefail
           sudo apt-get update -qq
