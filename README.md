@@ -47,6 +47,13 @@ examples/
   torture_test_examples/       -- torture test example
 ```
 
+## OpenSCAD version
+
+The towers fit each section label to its face with `textmetrics()`, built in
+from the OpenSCAD 2026.10.15 development snapshot. Earlier versions warn that
+the function is missing or experimental and carve the labels at their full
+size, which can run off the face.
+
 ## Quality / rendering
 
 All examples set `$fn` based on `$preview`:
