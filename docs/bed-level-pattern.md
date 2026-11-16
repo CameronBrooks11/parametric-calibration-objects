@@ -1,3 +1,8 @@
+---
+title: Bed level patterns
+nav_order: 4
+---
+
 # Bed Level Pattern Reference
 
 **File:** `src/bedlevelpattern.scad` | **Examples:** `examples/bedlevelpattern_examples/`

@@ -1,3 +1,8 @@
+---
+title: Calibration towers
+nav_order: 3
+---
+
 # Tower Module Reference
 
 Parameter reference for all five calibration tower generators.
