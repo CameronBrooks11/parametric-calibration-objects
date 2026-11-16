@@ -152,6 +152,12 @@ module generate_temp_right_bridge_support(
 }
 
 // Generate the section label carved into the left column
+// The font size, at most `size`, at which `txt` is no wider than `width`. Where
+// textmetrics() is missing (OpenSCAD 2021.01) it returns `size` unchanged.
+function temp_label_size(txt, size, font, width) =
+  let (w = textmetrics(text=txt, size=size, font=font).size[0])
+  is_undef(w) || w <= width ? size : size * width / w;
+
 module generate_temp_section_label(
   label,
   section_label_prefix,
@@ -164,6 +170,12 @@ module generate_temp_section_label(
   iota
 ) {
   full_label = str(section_label_prefix, label, section_label_suffix);
+  // The label may span 90% of the face it is carved into.
+  label_width = cube_size * 0.9;
+  label_size = temp_label_size(full_label, section_label_font_size, font, label_width);
+  fitted_width = textmetrics(text=full_label, size=label_size, font=font).size[0];
+  assert(is_undef(fitted_width) || fitted_width <= label_width + 1e-3,
+         str("section label \"", full_label, "\" is wider than its face"));
   translate([-tower_width / 2 + cube_size / 2, -cube_size / 2 - iota, cube_size / 2])
     rotate([90, 0, 0])
       translate([0, 0, -label_depth])
@@ -171,7 +183,7 @@ module generate_temp_section_label(
           text(
             text=full_label,
             font=font,
-            size=section_label_font_size,
+            size=label_size,
             halign="center",
             valign="center"
           );
