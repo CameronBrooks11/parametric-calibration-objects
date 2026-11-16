@@ -43,8 +43,8 @@ examples/
   retracttower_examples/      -- retraction tower example
   speedtower_examples/        -- speed tower example
   temptower_examples/         -- temperature tower examples (standard + detailed)
-  xyzcalicube_example.scad
-  torture_test_example.scad
+  xyzcalicube_examples/        -- XYZ calibration cube example
+  torture_test_examples/       -- torture test example
 ```
 
 ## Quality / rendering

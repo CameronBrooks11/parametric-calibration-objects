@@ -1,4 +1,5 @@
-// examples/retracttower_examples/retracttower_example.scad
+// Retraction tower
+// A square and a round column in sections from 1 to 6 mm of retraction, in 1 mm steps.
 
 include <../../src/retracttower.scad>;
 

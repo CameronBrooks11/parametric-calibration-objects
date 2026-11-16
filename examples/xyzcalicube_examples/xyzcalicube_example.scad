@@ -1,6 +1,7 @@
-// examples/xyzcalicube_example.scad
+// XYZ calibration cube
+// A 20 mm cube with X, Y and Z cut into its faces, to measure each axis.
 
-include <../src/xyzcalicube.scad>;
+include <../../src/xyzcalicube.scad>;
 
 /* [User Parameters] */
 

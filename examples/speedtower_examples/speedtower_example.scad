@@ -1,4 +1,5 @@
-// examples/speedtower_examples/speedtower_example.scad
+// Speed tower
+// An L-shaped tower in sections from 20 to 100 mm/s, in 20 mm/s steps.
 
 include <../../src/speedtower.scad>;
 
