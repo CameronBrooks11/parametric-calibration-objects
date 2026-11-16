@@ -1,3 +1,8 @@
+---
+title: Cube and torture test
+nav_order: 5
+---
+
 # Utility Model Reference
 
 ---
