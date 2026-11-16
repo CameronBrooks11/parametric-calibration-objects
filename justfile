@@ -33,6 +33,8 @@ images:
       for p in "$@"; do args+=(-label "${p#*=}" "$tmp/${p%%=*}.png"); done
       magick montage "${args[@]}" -resize 600x600 -geometry +24+24 -tile "${cols}x" \
         -background '#f8f8f8' -pointsize 22 "$out"
+      # 128 colours, undithered: a third to a half the size, no visible banding
+      magick "$out" -dither None -colors 128 -define png:compression-level=9 "$out"
     }
     t=examples
     shot $t/temptower_examples/temptower_example.scad temp
