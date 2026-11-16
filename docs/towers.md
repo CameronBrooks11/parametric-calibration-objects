@@ -35,7 +35,7 @@ generate_flow_tower(starting_value = 115, ending_value = 85, value_change = -5);
 | `section_hole_diameter`                   | `4.201`              | Diameter of the through-hole per section (mm)           |
 | `font`                                    | `"Arial:style=Bold"` | Font for all labels                                     |
 | `label_sections`                          | `true`               | Carve value into each section                           |
-| `section_label_height_multiplier`         | `0.401`              | Section label font size as fraction of `section_size`   |
+| `section_label_height_multiplier`         | `0.401`              | Largest section label font size, as a fraction of `section_size`; a label shrinks to fit its face |
 | `tower_label_height_multiplier`           | `0.601`              | Tower label font size as fraction of `section_size`     |
 | `tower_secondary_label_height_multiplier` | `0.401`              | Secondary label font size as fraction of `section_size` |
 | `wall_thickness`                          | `0.601`              | Wall thickness (mm)                                     |
@@ -68,7 +68,7 @@ generate_temp_tower(starting_value = 220, ending_value = 180, value_change = -5)
 | `section_height`                  | `8.001`              | Height of each section (mm)                             |
 | `font`                            | `"Arial:style=Bold"` | Font for all labels                                     |
 | `label_sections`                  | `true`               | Carve value into each section                           |
-| `section_label_height_multiplier` | `0.401`              | Section label font size as fraction of `section_height` |
+| `section_label_height_multiplier` | `0.401`              | Largest section label font size, as a fraction of `section_height`; a label shrinks to fit its face |
 | `tower_label_height_multiplier`   | `0.601`              | Tower label font size as fraction of `section_height`   |
 | `column_label_height_multiplier`  | `0.301`              | Column label font size as fraction of `section_height`  |
 | `wall_thickness`                  | `0.601`              | Wall thickness (mm)                                     |
@@ -136,7 +136,7 @@ generate_retract_tower(starting_value = 1.0, ending_value = 6.0, value_change = 
 | `section_height`                         | `8.001`              | Height of each section (mm)                             |
 | `font`                                   | `"Arial:style=Bold"` | Font for all labels                                     |
 | `label_sections`                         | `true`               | Carve value into each section                           |
-| `section_label_height_multiplier`        | `0.401`              | Section label font size as fraction of `section_height` |
+| `section_label_height_multiplier`        | `0.401`              | Largest section label font size, as a fraction of `section_height`; a label shrinks to fit its face |
 | `tower_label_height_multiplier`          | `0.601`              | Tower label font size as fraction of `section_height`   |
 | `column_label_height_multiplier`         | `0.301`              | Column label font size as fraction of `section_height`  |
 | `column_label_letter_spacing_multiplier` | `1.001`              | Letter spacing for the curved column label              |
