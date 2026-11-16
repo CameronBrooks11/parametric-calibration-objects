@@ -1,4 +1,5 @@
-// examples/blp_five_circles_example.scad
+// Five circles bed level pattern
+// Filled circles at the centre and in each corner, joined by a curved outline.
 
 include <../../src/bedlevelpattern.scad>;
 

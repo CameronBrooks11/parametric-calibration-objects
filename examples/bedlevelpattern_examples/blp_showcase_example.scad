@@ -1,5 +1,5 @@
-// examples/bedlevelpattern_examples/blp_showcase_example.scad
-// Any of the eight bed level patterns, picked in the Customizer.
+// Any bed level pattern
+// All eight patterns in one file: pick one, and set its parameters, in the Customizer.
 
 include <../../src/bedlevelpattern.scad>;
 

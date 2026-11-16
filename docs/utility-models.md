@@ -4,7 +4,7 @@
 
 ## generate_xyz_cali_cube
 
-**File:** `src/xyzcalicube.scad` | **Example:** `examples/xyzcalicube_example.scad`
+**File:** `src/xyzcalicube.scad` | **Example:** `examples/xyzcalicube_examples/xyzcalicube_example.scad`
 
 A 20 mm XYZ calibration cube with X, Y, and Z letters cut into the corresponding
 faces. Useful for verifying dimensional accuracy and axis orientation.
@@ -25,7 +25,7 @@ reference design. For best results use the default 20 mm.
 
 ## generate_torture_test
 
-**File:** `src/torture_test.scad` | **Example:** `examples/torture_test_example.scad`
+**File:** `src/torture_test.scad` | **Example:** `examples/torture_test_examples/torture_test_example.scad`
 
 A structural torture test model: a wire-frame cube tilted onto its corner,
 clipped to a flat base plane, and mounted on a circular platform. Tests

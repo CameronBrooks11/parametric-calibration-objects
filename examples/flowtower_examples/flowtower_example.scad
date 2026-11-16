@@ -1,4 +1,5 @@
-// examples/flowtower_examples/flowtower_example.scad
+// Flow tower
+// Hollow sections labelled 115 down to 85 in steps of 5, to choose a flow rate.
 
 include <../../src/flowtower.scad>;
 

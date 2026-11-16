@@ -1,4 +1,5 @@
-// examples/blp_concentric_circles_example.scad
+// Concentric circles bed level pattern
+// Seven single-line rings across 90% of a 220 x 220 mm bed.
 
 include <../../src/bedlevelpattern.scad>;
 

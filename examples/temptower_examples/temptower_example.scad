@@ -1,4 +1,5 @@
-// examples/temptower_examples/temptower_example.scad
+// Temperature tower
+// Bridged sections from 220 down to 180 degrees C in 5 degree steps, each labelled.
 
 include <../../src/temptower.scad>;
 

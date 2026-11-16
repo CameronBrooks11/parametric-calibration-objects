@@ -1,4 +1,5 @@
-// examples/blp_grid_example.scad
+// Grid bed level pattern
+// A 4 x 4 grid of single lines across 90% of a 220 x 220 mm bed.
 
 include <../../src/bedlevelpattern.scad>;
 

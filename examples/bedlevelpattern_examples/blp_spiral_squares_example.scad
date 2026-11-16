@@ -1,4 +1,5 @@
-// examples/blp_spiral_squares_example.scad
+// Spiral squares bed level pattern
+// One continuous square spiral of seven turns across 90% of a 220 x 220 mm bed.
 
 include <../../src/bedlevelpattern.scad>;
 

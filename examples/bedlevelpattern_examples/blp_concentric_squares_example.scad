@@ -1,4 +1,5 @@
-// examples/blp_concentric_squares_example.scad
+// Concentric squares bed level pattern
+// Seven nested square outlines across 90% of a 220 x 220 mm bed.
 
 include <../../src/bedlevelpattern.scad>;
 

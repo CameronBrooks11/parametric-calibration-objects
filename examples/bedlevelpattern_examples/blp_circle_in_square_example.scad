@@ -1,4 +1,5 @@
-// examples/circle_in_square_example.scad
+// Circle in square bed level pattern
+// A circle inside a square outline, across 90% of a 220 x 220 mm bed.
 
 include <../../src/bedlevelpattern.scad>;
 

@@ -1,4 +1,5 @@
-// examples/blp_x_in_square_example.scad
+// X in square bed level pattern
+// Corner-to-corner diagonals inside a square outline.
 
 include <../../src/bedlevelpattern.scad>;
 

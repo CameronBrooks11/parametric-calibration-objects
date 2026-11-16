@@ -1,4 +1,5 @@
-// examples/blp_padded_grid_example.scad
+// Padded grid bed level pattern
+// A 4 x 4 grid with a square pad at every intersection.
 
 include <../../src/bedlevelpattern.scad>;
 

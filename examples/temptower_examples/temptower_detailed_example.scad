@@ -1,4 +1,5 @@
-// examples/temptower_examples/temptower_detailed_example.scad
+// Detailed temperature tower
+// Sections from 220 down to 180 degrees C in 5 degree steps, each with overhangs, cones and a bridge.
 
 include <../../src/temptower_detailed.scad>;
 

@@ -1,6 +1,7 @@
-// examples/torture_test_example.scad
+// Torture test
+// An 80 mm cube of bars stood on one corner on a round base.
 
-include <../src/torture_test.scad>;
+include <../../src/torture_test.scad>;
 
 /* [User Parameters] */
 
