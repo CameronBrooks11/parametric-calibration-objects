@@ -4,6 +4,12 @@ A library of parametric OpenSCAD calibration objects for 3D printers. Each file
 in `src/` is a reusable library module -- no geometry is generated on `include`,
 only on an explicit module call. Example entry points live in `examples/`.
 
+![The five calibration towers](images/towers.png)
+
+![The eight bed level patterns, seen from above](images/bed-level-patterns.png)
+
+![The XYZ calibration cube and the torture test](images/cube-and-torture-test.png)
+
 ## Modules
 
 | Module | File | Description |

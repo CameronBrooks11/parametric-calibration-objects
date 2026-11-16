@@ -10,6 +10,7 @@ planning/
 *.dxf
 *.svg
 *.png
+!images/*.png
 *.echo
 *.ast
 *.term
