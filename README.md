@@ -58,6 +58,11 @@ $fn = $preview ? preview_quality_value : render_quality_value;
 Lower values render faster in preview; increase `render_quality_value` before
 exporting for final STL output.
 
+## Checks
+
+`just test` renders every example in `examples/` with OpenSCAD and fails on
+any warning or an empty model. CI runs it on every pull request.
+
 ## References
 
 - Inspiration: [All3DP bed levelling article](https://all3dp.com/2/ender-3-pro-bed-leveling-gcode/)
